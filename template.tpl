@@ -142,15 +142,14 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-const setInWindow = require('setInWindow');
-const callInWindow = require('callInWindow');
+const createQueue = require('createQueue');
 const makeInteger = require('makeInteger');
 const makeNumber = require('makeNumber');
 
+const WonderPush_push = createQueue('WonderPush');
+
 const tags = data.tags || [];
 const properties = data.properties || [];
-
-setInWindow('WonderPush', [], false);
 
 tags.forEach(item => {
   let action;
@@ -159,7 +158,7 @@ tags.forEach(item => {
   } else if (item.action === 'remove') {
     action = 'removeTag';
   }
-  if (action) callInWindow('WonderPush.push', [action, item.tag]);
+  if (action) WonderPush_push([action, item.tag]);
 });
 
 properties.forEach(item => {
@@ -195,7 +194,7 @@ properties.forEach(item => {
       }
       break;
   }
-  if (action) callInWindow('WonderPush.push', [action, item.property, item.value]);
+  if (action) WonderPush_push([action, item.property, item.value]);
 });
 
 data.gtmOnSuccess();
@@ -254,45 +253,6 @@ ___WEB_PERMISSIONS___
                     "boolean": false
                   }
                 ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "WonderPush.push"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
               }
             ]
           }
@@ -314,6 +274,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 12/3/2019, 12:41:07 PM
+Created on 12/10/2019, 9:17:59 AM
 
 
